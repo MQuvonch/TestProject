@@ -12,7 +12,7 @@ using TestProject.Data.Contexts;
 namespace TestProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250408112351_addedEntities")]
+    [Migration("20250409053628_addedEntities")]
     partial class addedEntities
     {
         /// <inheritdoc />
@@ -251,7 +251,7 @@ namespace TestProject.Migrations
             modelBuilder.Entity("TestProject.Data.Models.Entities.Roles.UserRole", b =>
                 {
                     b.HasOne("TestProject.Data.Models.Entities.Roles.Role", "Role")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -289,6 +289,11 @@ namespace TestProject.Migrations
             modelBuilder.Entity("TestProject.Data.Models.Entities.Groups", b =>
                 {
                     b.Navigation("StudentGroups");
+                });
+
+            modelBuilder.Entity("TestProject.Data.Models.Entities.Roles.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("TestProject.Data.Models.Entities.Student", b =>

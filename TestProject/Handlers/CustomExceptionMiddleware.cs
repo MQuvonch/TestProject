@@ -37,7 +37,6 @@ namespace TestProject.Handlers
                 success = false,
                 message = exception.Message,
                 errorType = exception.GetType().Name,
-                StackTrace = exception.StackTrace
             };
 
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

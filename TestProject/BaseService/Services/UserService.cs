@@ -3,6 +3,7 @@ using TestProject.BaseService.Dtos.UserDto;
 using TestProject.BaseService.Helpers;
 using TestProject.BaseService.IServices;
 using TestProject.Data.Models.Entities;
+using TestProject.Data.Models.Entities.Roles;
 using TestProject.Data.Repositories;
 
 namespace TestProject.BaseService.Services;
@@ -10,10 +11,16 @@ namespace TestProject.BaseService.Services;
 public class UserService : IUserService
 {
     private readonly IRepository<User, Guid> _userRepository;
+    private readonly IRepository<UserRole, int> _userRoleRepository;
+    private readonly IAuthService _authService;
 
-    public UserService(IRepository<User, Guid> userRepository)
+    public UserService(IRepository<User, Guid> userRepository,
+                       IAuthService authService,
+                       IRepository<UserRole, int> userRoleRepository)
     {
         _userRepository = userRepository;
+        _authService = authService;
+        _userRoleRepository = userRoleRepository;
     }
 
     public async Task<bool> DeleteAsync(Guid Id)
@@ -69,11 +76,18 @@ public class UserService : IUserService
             FirstName = dto.FirstName,
             Email = dto.Email,
             UserName = dto.UserName,
-            PasswordHash = GeneretedPasswordHash,
+            PasswordHash = GeneretedPasswordHash
         };
 
         var createUser = await _userRepository.CreateAsync(userDto);
 
+        var userRole = new UserRole()
+        {
+            UserId = createUser.Id,
+            RoleId = 1
+        };
+
+        await _userRoleRepository.CreateAsync(userRole);
         return true;
     }
 

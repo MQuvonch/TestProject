@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestProject.BaseService.Dtos.StudentDto;
 using TestProject.BaseService.IServices;
@@ -31,6 +32,7 @@ namespace TestProject.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var response = await _studentService.GetAllAsync();
@@ -38,6 +40,7 @@ namespace TestProject.Controllers
         }
 
         [HttpGet("{Id}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetIdAsync(Guid Id)
         {
             var response = await _studentService.GetByIdAsync(Id);

@@ -16,9 +16,10 @@ namespace TestProject.Data.Models.Entities;
         [Required]
 
         public string PasswordHash { get; set; }
-        [EmailAddress]
+
         [Required]
-        public string Email { get; set; }
+        [EmailAddress]
+        public string Email { get; set; } 
         public ICollection<UserRole> UserRoles { get; set; }
 
     }

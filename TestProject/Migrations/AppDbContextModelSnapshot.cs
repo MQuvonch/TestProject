@@ -248,7 +248,7 @@ namespace TestProject.Migrations
             modelBuilder.Entity("TestProject.Data.Models.Entities.Roles.UserRole", b =>
                 {
                     b.HasOne("TestProject.Data.Models.Entities.Roles.Role", "Role")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -286,6 +286,11 @@ namespace TestProject.Migrations
             modelBuilder.Entity("TestProject.Data.Models.Entities.Groups", b =>
                 {
                     b.Navigation("StudentGroups");
+                });
+
+            modelBuilder.Entity("TestProject.Data.Models.Entities.Roles.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("TestProject.Data.Models.Entities.Student", b =>
